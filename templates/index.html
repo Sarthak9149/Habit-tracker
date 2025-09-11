@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block head_resources %}
+    <title>Habit Tracker</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+
+
+    <!-- Main Container -->
+    <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-8 space-y-8">
+        
+        <!-- Navigation Bar -->
+        <nav class="flex items-center justify-between p-4 bg-gray-100 rounded-2xl">
+            <div class="flex items-center space-x-6">
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition duration-300">Login</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition duration-300">Dashboard</a>
+            </div>
+            <div class="text-gray-500 font-semibold">
+                September 10, 2025
+            </div>
+        </nav>
+
+        <!-- Profile Section -->
+        <div class="flex items-center space-x-4 p-4">
+            <div class="w-16 h-16 bg-gray-300 rounded-full overflow-hidden border-2 border-gray-400">
+                <img src="https://placehold.co/100x100/A0A0A0/FFFFFF?text=P" alt="Profile" class="w-full h-full object-cover">
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Hi, Jane Doe!</h1>
+                <p class="text-sm text-gray-500">Let's track your habits.</p>
+            </div>
+        </div>
+
+        <!-- Plant Animation Section -->
+        <div class="flex justify-center p-8">
+            <div class="w-48 h-48 relative overflow-hidden">
+                <!-- Pot -->
+                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-12 bg-orange-600 rounded-t-lg shadow-inner"></div>
+                <!-- Soil -->
+                <div class="absolute bottom-[48px] left-1/2 -translate-x-1/2 w-20 h-2 bg-slate-700 rounded-lg"></div>
+                <!-- Stem -->
+                <div class="plant-stem absolute bottom-[56px] left-1/2 -translate-x-1/2 w-2 bg-green-700 h-32 rounded-lg"></div>
+                <!-- Leaves -->
+                <div class="plant-leaf-left absolute bottom-[60px] left-[calc(50%-10px)] w-10 h-10 bg-green-500 rotate-45 rounded-full" style="transform: scale(0); opacity: 0;"></div>
+                <div class="plant-leaf-right absolute bottom-[60px] left-[calc(50%+10px)] w-10 h-10 bg-green-500 -rotate-45 rounded-full" style="transform: scale(0); opacity: 0;"></div>
+            </div>
+        </div>
+        
+        <!-- Habit Tracking Section -->
+        <div class="flex flex-col items-center p-6 bg-gray-50 rounded-2xl shadow-inner">
+            <h2 class="text-xl font-bold text-gray-700 mb-4">Daily Check-in</h2>
+            <p class="text-gray-500 mb-6">Mark the days you completed your habit.</p>
+            
+            <!-- Calendar Icon -->
+            <button id="calendar-icon" class="text-4xl text-indigo-500 hover:text-indigo-600 transition duration-300">
+                <i class="fas fa-calendar-alt"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Calendar Pop-out Overlay & Modal -->
+    <div id="calendar-overlay" class="calendar-overlay"></div>
+    <div id="calendar-modal" class="calendar-modal p-6 bg-white rounded-3xl shadow-2xl w-80">
+        <div class="flex justify-between items-center mb-4">
+            <button class="text-xl text-gray-500 hover:text-gray-700">&lt;</button>
+            <h3 class="font-bold text-lg">September 2025</h3>
+            <button class="text-xl text-gray-500 hover:text-gray-700">&gt;</button>
+        </div>
+        <div class="grid grid-cols-7 text-center text-sm font-medium text-gray-500 gap-2 mb-2">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+        </div>
+        <div class="grid grid-cols-7 text-center gap-2">
+            <!-- Blank cells for padding -->
+            <div></div><div></div><div></div>
+            <!-- Date cells -->
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">1</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">2</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">3</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">4</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">5</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">6</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">7</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">8</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">9</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-white bg-indigo-500">10</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">11</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">12</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">13</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">14</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">15</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">16</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">17</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">18</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">19</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">20</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">21</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">22</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">23</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">24</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">25</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">26</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">27</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">28</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">29</div>
+            <div class="date-cell w-10 h-10 flex items-center justify-center rounded-full text-gray-700 bg-gray-100">30</div>
+            <!-- Blank cells for padding -->
+            <div></div>
+        </div>
+    </div>
+    {% endblock %}
+    {% block scripts %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% endblock %}
+
+</html>
