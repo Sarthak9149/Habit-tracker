@@ -21,7 +21,7 @@
                 <a href="#" class="text-gray-700 hover:text-indigo-600 transition duration-300">Dashboard</a>
             </div>
             <div class="text-gray-500 font-semibold">
-                September 10, 2025
+                {{ current_date }}
             </div>
         </nav>
 
@@ -31,7 +31,13 @@
                 <img src="https://placehold.co/100x100/A0A0A0/FFFFFF?text=P" alt="Profile" class="w-full h-full object-cover">
             </div>
             <div>
-                <h1 class="text-2xl font-bold text-gray-800">Hi, Jane Doe!</h1>
+                <h1 class="text-2xl font-bold text-gray-800">
+                    {% if name %}
+                    Hi, {{ name }}!
+                    {% else %}
+                    Hi, user!
+                    {% endif %}
+                </h1>
                 <p class="text-sm text-gray-500">Let's track your habits.</p>
             </div>
         </div>
